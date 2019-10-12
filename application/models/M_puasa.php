@@ -26,6 +26,11 @@ class M_puasa extends CI_Model {
 		return $query->result();
 	}
 
+	public function getPuasaNpm($npm)
+	{
+		return $this->db->select('puasa')->where('NPM', $npm)->get('data')->row()->puasa;
+	}
+
 	public function tanggalPuasa($tanggal)
 	{
 		$object = array('puasa' => $tanggal );
@@ -36,6 +41,11 @@ class M_puasa extends CI_Model {
 		} else {
 			return false;
 		}
+	}
+
+	public function get_tanggal_puasa()
+	{
+		return $this->db->where('id', '1')->get('tanggal_puasa_ib')->row()->puasa;
 	}
 
 	public function get_tidak_puasa()
@@ -134,7 +144,14 @@ class M_puasa extends CI_Model {
 
 	public function daftarPuasa()
 	{
-		$object = array('puasa' => $this->input->post('txt-daftarpuasa'));
+		$status = '';
+		if ($this->input->post('switch_daftar_puasa') == 'Ya') {
+			$status = 'Ya';
+		} else {
+			$status = 'Tidak';
+		}
+
+		$object = array('puasa' => $status);
 		$this->db->where('npm', $this->session->userdata('npm'))->update('data', $object);
 
 		if ($this->db->affected_rows() > 0) {

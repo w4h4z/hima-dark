@@ -68,7 +68,7 @@
             </a>
           </li>
           <li>
-            <a href="./dashboard.html">
+            <a href="<?php echo base_url(); ?>index.php/senat/jdih">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>JDIH</p>
             </a>
@@ -80,7 +80,7 @@
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href="<?php echo base_url(); ?>index.php/senat/puasa">
               <i class="tim-icons icon-pin"></i>
               <p>Puasa</p>
             </a>

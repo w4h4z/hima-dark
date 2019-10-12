@@ -25,7 +25,7 @@ class M_jdih extends CI_Model {
 			die("Anda Bukan MPM");
 		}
 		$a = array(
-			'nama' 			=> $this->input->post('judul'),
+			'nama' 			=> $this->input->post('judul_jdih'),
 			'npm'			=> $this->session->userdata('npm'),
 			'files'			=> $data['file_name']
 		);
@@ -41,7 +41,7 @@ class M_jdih extends CI_Model {
 	public function deleteJdih($id)
 	{
 		$jdih = $this->db->select('files')->where('nomor', $id)->get('nama_file')->row()->files;
-		unlink('./user/files/'.$jdih.'');
+		unlink('./jdih/'.$jdih.'');
 
 		$this->db->where('nomor', $id)->delete('nama_file');
 

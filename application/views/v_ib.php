@@ -24,7 +24,7 @@
               </form>
             </div>
             <!-- Admin -->
-            <?php if ($this->session->userdata('Departemen') == 'Departemen Kesejahteraan Mahasiswa' || $this->session->userdata('akses') == 'ADMIN'): ?>
+            <?php if ($this->session->userdata('departemen') == 'Departemen Kesejahteraan Mahasiswa' || $this->session->userdata('akses') == 'ADMIN'): ?>
             <div style="float: left;">
               <p>Buka/Tutup Izin Bermalam :</p>
               <form method="post" action="<?php echo base_url(); ?>index.php/senat/buka_tutup_ib">
