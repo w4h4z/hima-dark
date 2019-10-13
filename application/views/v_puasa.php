@@ -54,7 +54,7 @@
         </div>
         <div class="card-body">
           <div class="table-responsive ps">
-            <table class="table tablesorter" id="myTable">
+            <table class="table tablesorter" id="tablepuasa">
               <thead class=" text-primary">
                 <tr>
                   <th>
@@ -75,16 +75,16 @@
                 <?php $i=0; foreach ($puasa as $data): ?>
                   <tr>
                     <td>
-                      <?php echo ++$i; ?>
+                      <?php echo htmlentities(++$i); ?>
                     </td>
                     <td>
-                      <?php echo $data->nama; ?>
+                      <?php echo htmlentities($data->nama); ?>
                     </td>
                     <td>
-                      <?php echo $data->NPM; ?>
+                      <?php echo htmlentities($data->NPM); ?>
                     </td>
                     <td>
-                      <?php echo $data->kelas; ?>
+                      <?php echo htmlentities($data->kelas); ?>
                     </td>
                   </tr>
                 <?php endforeach ?>

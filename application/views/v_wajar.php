@@ -14,7 +14,7 @@
                 </div>
             <?php endif ?>
           <!-- Admin -->
-            <?php if ($this->session->userdata('departemen') == 'Departemen Riset dan Teknologi' || $this->session->userdata('akses') == 'ADMIN'): ?>
+            <?php if ($this->session->userdata('departemen') == 'Departemen Akademik Mahasiswa' || $this->session->userdata('akses') == 'ADMIN'): ?>
             <div style="float: left;">
               <div>
                 <form method="post" action="<?php echo base_url(); ?>index.php/senat/reset_wajar">
@@ -58,16 +58,16 @@
                 <?php $i=0; foreach ($absen as $data): ?>
                   <tr>
                     <td>
-                      <?php echo ++$i; ?>
+                      <?php echo htmlentities(++$i); ?>
                     </td>
                     <td>
-                      <?php echo $data->nama; ?>
+                      <?php echo htmlentities($data->nama); ?>
                     </td>
                     <td>
-                      <?php echo $data->NPM; ?>
+                      <?php echo htmlentities($data->NPM); ?>
                     </td>
                     <td>
-                      <?php echo $data->kelas; ?>
+                      <?php echo htmlentities($data->kelas); ?>
                     </td>
                   </tr>
                 <?php endforeach ?>

@@ -15,7 +15,7 @@ class M_user extends CI_Model {
 
 	public function gantiPass()
 	{
-		$data = array('password' => sha1($this->input->post('password')));
+		$data = array('password' => sha1($this->input->post('pass-baru')));
 		$this->db->where('NPM', $this->session->userdata('npm'))->update('data', $data);
 
 		if ($this->db->affected_rows() > 0) {
@@ -59,7 +59,7 @@ class M_user extends CI_Model {
 
 	public function checkPass()
 	{
-		return $this->db->select('password')->where('npm', $this->session->userdata('npm'))->get('data')->row();
+		return $this->db->select('password')->where('NPM', $this->session->userdata('npm'))->get('data')->row();
 	}
 
 /* End of file m_user.php */

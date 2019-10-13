@@ -58,18 +58,18 @@
                 <?php $i=0; foreach ($jdih as $data): ?>
                   <tr>
                     <td>
-                      <?php echo ++$i; ?>
+                      <?php echo htmlentities(++$i); ?>
                     </td>
                     <td>
-                      <?php echo $data->nama; ?>
+                      <?php echo htmlentities($data->nama); ?>
                     </td>
                     <td>
-                      <?php echo $data->tgl_upload; ?>
+                      <?php echo htmlentities($data->tgl_upload); ?>
                     </td>
                     <td>
                       <a href="<?php echo base_url(); ?>jdih/<?php echo $data->files; ?>" target="_blank" class="btn btn-sm btn-success">Download</a>
                       <?php if ($this->session->userdata('akses') == 'MPM' || $this->session->userdata('akses') == 'ADMIN'): ?>
-                        <a href="<?php echo base_url(); ?>index.php/senat/deleteJdih/<?php echo $data->nomor; ?>" class="btn btn-sm btn-danger">Hapus</a>
+                        <a href="<?php echo base_url(); ?>index.php/senat/deleteJdih/<?php echo $data->nomor; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
                       <?php endif ?>
                     </td>
                   </tr>

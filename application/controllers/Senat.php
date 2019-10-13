@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Senat extends CI_Controller {
@@ -8,15 +9,9 @@ class Senat extends CI_Controller {
 		parent::__construct();
 		$this->load->model('m_puasa');	
 		$this->load->model('m_ib');
-		$this->load->model('m_user');
-		$this->load->model('m_jdih');
-		$this->load->model('m_chart');
-		$this->load->model('m_pengumuman');
-		$this->load->model('m_asrama');
-		$this->load->model('m_depniag');	
+		$this->load->model('m_jdih');	
 		$this->load->model('m_depdik');	
-		$this->load->model('m_satma');	
-		$this->load->model('m_depsen');	
+		$this->load->model('m_user');
 	}
 
 	public function index()
@@ -288,12 +283,16 @@ class Senat extends CI_Controller {
 
 	public function deleteJdih($id)
 	{
-		if ($this->m_jdih->deleteJdih($id) == true) {
-			$this->session->set_flashdata('success', 'File berhasil dihapus');
-			redirect('senat/jdih');
+		if ($this->session->userdata('akses') == "MPM" || $this->session->userdata('akses') == "ADMIN") {
+			if ($this->m_jdih->deleteJdih($id) == true) {
+				$this->session->set_flashdata('success', 'File berhasil dihapus');
+				redirect('senat/jdih');
+			} else {
+				$this->session->set_flashdata('fail', 'File gagal dihapus');
+				redirect('senat/jdih');
+			}
 		} else {
-			$this->session->set_flashdata('fail', 'File gagal dihapus');
-			redirect('senat/jdih');
+			return;
 		}
 	}
 
@@ -336,6 +335,34 @@ class Senat extends CI_Controller {
 		} else {
 			redirect('auth');
 		}
+	}
+
+	public function gantiPass()
+	{
+		if (!$this->checkPass()) {
+			$this->session->set_flashdata('fail', 'Password lama tidak sama');
+			redirect('senat');
+		}
+
+		if ($this->m_user->gantiPass() == true) {
+			$this->session->set_flashdata('success', 'Ganti Password Berhasil');
+			redirect('senat');
+		} else {
+			$this->session->set_flashdata('fail', 'Ganti Password Gagal');
+			redirect('senat');
+		}
+	}
+
+	public function checkPass()
+	{
+		$pass = $this->m_user->checkPass()->password;
+		$passPost = sha1($this->input->post('pass-lama'));
+
+		if($passPost != $pass){
+			return false;
+		}
+
+		return true;
 	}
 
 }

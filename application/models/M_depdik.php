@@ -12,7 +12,7 @@ class M_depdik extends CI_Model {
     public function getBelumAbsen()
 	{
 		$this->db->select("nama,NPM,wajar,kelas");
-        $this->db->order_by('NPM', 'ASC');
+        $this->db->order_by('kelas', 'ASC');
         $this->db->where('wajar',"TIDAK");
         $this->db->where("akses!=","ADMIN");
 		return $this->db->get('data')->result();
@@ -21,7 +21,7 @@ class M_depdik extends CI_Model {
     public function getSudahAbsen()
 	{
 		$this->db->select("nama,NPM,wajar,kelas");
-        $this->db->order_by('NPM', 'ASC');
+        $this->db->order_by('kelas', 'ASC');
         $this->db->where('wajar!=',"TIDAK");
         $this->db->where("akses!=","ADMIN");
 		return $this->db->get('data')->result();

@@ -22,7 +22,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="<?php echo base_url(); ?>/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="<?php echo base_url(); ?>/assets/images/hima.png">
   <title>
-    <?php echo $title; ?> | Sistem Informasi HIMA
+    <?php echo htmlentities($title); ?> | Sistem Informasi HIMA
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -31,16 +31,17 @@
   <link href="<?php echo base_url(); ?>/assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="<?php echo base_url(); ?>/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="<?php echo base_url(); ?>/assets/demo/demo.css" rel="stylesheet" />
+  <?php if ($main_view == 'v_ib' || $main_view == 'v_puasa' || $main_view == 'v_jdih' || $main_view == 'v_wajar' || $main_view == 'v_belum_wajar'): ?>
   <!-- Datatabele -->
   <link href="<?php echo base_url(); ?>/assets/datatable/datatables.min.css" rel="stylesheet">
+  <?php if (($main_view == 'v_ib' && $this->session->userdata('departemen') == 'Departemen Kesejahteraan Mahasiswa') || ($main_view == 'v_puasa' &&  $this->session->userdata('departemen') == 'Departemen Rohani') || $this->session->userdata('akses') == 'ADMIN'): ?> 
   <!-- Export Button -->
   <link href="<?php echo base_url(); ?>/assets/datatable/export/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>/assets/datatable/export/buttons.bootstrap4.min.css" rel="stylesheet">
+  <?php endif ?>
+  <?php endif ?>
    <!-- Switch Button -->
   <link href="<?php echo base_url(); ?>/assets/css/switch-button.css" rel="stylesheet" />
-  
   <link href="<?php echo base_url(); ?>/assets/switchButton/bootstrap-toggle.min.css" rel="stylesheet"> 
 
 </head>
@@ -57,7 +58,7 @@
             <i class="tim-icons icon-satisfied"></i>
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
-            <?php echo $this->session->userdata('nama'); ?>
+            <?php echo htmlentities($this->session->userdata('nama')); ?>
           </a>
         </div>
         <ul class="nav">
@@ -205,154 +206,31 @@
   <script src="<?php echo base_url(); ?>/assets/js/core/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/core/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS -->
-  <script src="<?php echo base_url(); ?>/assets/js/plugins/chartjs.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="<?php echo base_url(); ?>/assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="<?php echo base_url(); ?>/assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
-  <script src="<?php echo base_url(); ?>/assets/demo/demo.js"></script>
-  <!-- Datatable -->
-  <script src="<?php echo base_url(); ?>/assets/datatable/datatables.min.js"></script>
-  <!-- Export Button -->
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/dataTables.bootstrap4.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/dataTables.buttons.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.bootstrap4.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/jszip.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/pdfmake.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/vfs_fonts.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.html5.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.print.min.js"></script>
-  <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.colVis.min.js"></script>
+  <?php if ($main_view == 'v_ib' || $main_view == 'v_puasa' || $main_view == 'v_jdih' || $main_view == 'v_wajar' || $main_view == 'v_belum_wajar'): ?>
+     <!-- Datatable -->
+     <script src="<?php echo base_url(); ?>/assets/datatable/datatables.min.js"></script>
 
-  <script src="<?php echo base_url(); ?>/assets/switchButton/bootstrap-toggle.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
-        $navbar = $('.navbar');
-        $main_panel = $('.main-panel');
+    <?php if (($main_view == 'v_ib' && $this->session->userdata('departemen') == 'Departemen Kesejahteraan Mahasiswa') || ($main_view == 'v_puasa' &&  $this->session->userdata('departemen') == 'Departemen Rohani') || $this->session->userdata('akses') == 'ADMIN'): ?>  
+      <!-- Export Button -->
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/dataTables.bootstrap4.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/dataTables.buttons.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.bootstrap4.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/jszip.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/pdfmake.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/vfs_fonts.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.html5.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.print.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/datatable/export/buttons.colVis.min.js"></script>
+      <script src="<?php echo base_url(); ?>/assets/switchButton/bootstrap-toggle.min.js"></script>
+    <?php endif ?>
+  <?php endif ?>
 
-        $full_page = $('.full-page');
+  <script>$(document).ready(function(){$().ready(function(){$sidebar=$('.sidebar');$navbar=$('.navbar');$main_panel=$('.main-panel');$full_page=$('.full-page');$sidebar_responsive=$('body > .navbar-collapse');sidebar_mini_active=!0;white_color=!1;window_width=$(window).width();fixed_plugin_open=$('.sidebar .sidebar-wrapper .nav li.active a p').html();$('.fixed-plugin a').click(function(event){if($(this).hasClass('switch-trigger')){if(event.stopPropagation){event.stopPropagation()}else if(window.event){window.event.cancelBubble=!0}}});$('.fixed-plugin .background-color span').click(function(){$(this).siblings().removeClass('active');$(this).addClass('active');var new_color=$(this).data('color');if($sidebar.length!=0){$sidebar.attr('data',new_color)}
+if($main_panel.length!=0){$main_panel.attr('data',new_color)}
+if($full_page.length!=0){$full_page.attr('filter-color',new_color)}
+if($sidebar_responsive.length!=0){$sidebar_responsive.attr('data',new_color)}});$('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch",function(){var $btn=$(this);if(sidebar_mini_active==!0){$('body').removeClass('sidebar-mini');sidebar_mini_active=!1;blackDashboard.showSidebarMessage('Sidebar mini deactivated...')}else{$('body').addClass('sidebar-mini');sidebar_mini_active=!0;blackDashboard.showSidebarMessage('Sidebar mini activated...')}
+var simulateWindowResize=setInterval(function(){window.dispatchEvent(new Event('resize'))},180);setTimeout(function(){clearInterval(simulateWindowResize)},1000)});$('.switch-change-color input').on("switchChange.bootstrapSwitch",function(){var $btn=$(this);if(white_color==!0){$('body').addClass('change-background');setTimeout(function(){$('body').removeClass('change-background');$('body').removeClass('white-content')},900);white_color=!1}else{$('body').addClass('change-background');setTimeout(function(){$('body').removeClass('change-background');$('body').addClass('white-content')},900);white_color=!0}});$('.light-badge').click(function(){$('body').addClass('white-content');$.ajax({url:'<?php echo base_url(); ?>senat/resetAsrama/',type:'POST',dataType:'JSON',data:'',success:function(r){console.log(r)}})});$('.dark-badge').click(function(){$('body').removeClass('white-content')})})});</script><script type="text/javascript">$(document).ready(function(){<?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>$('#tableib').DataTable({dom:'Bfrtip',lengthChange:!1,buttons:['copy','excel','pdf','colvis']});table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');<?php else:?>$('#tableib').DataTable();<?php endif?><?php if($this->session->userdata('departemen')=='Departemen Rohani'||$this->session->userdata('akses')=='ADMIN'):?>$('#tablepuasa').DataTable({dom:'Bfrtip',lengthChange:!1,buttons:['copy','excel','pdf','colvis']});table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');<?php else:?>$('#tablepuasa').DataTable();<?php endif?>});</script><script type="text/javascript">function checkPasswordMatch(){var password=$("#pass-baru").val();var confirmPassword=$("#pass-baru-konf").val();if(password!=confirmPassword)
+$("#div-konf").html("Passwords do not match!").css('color','red');else $("#div-konf").html("Passwords match.").css('color','green')}</script>
 
-        $sidebar_responsive = $('body > .navbar-collapse');
-        sidebar_mini_active = true;
-        white_color = false;
-
-        window_width = $(window).width();
-
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
-
-
-
-        $('.fixed-plugin a').click(function(event) {
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
-
-        $('.fixed-plugin .background-color span').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data', new_color);
-          }
-
-          if ($main_panel.length != 0) {
-            $main_panel.attr('data', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data', new_color);
-          }
-        });
-
-        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            sidebar_mini_active = false;
-            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
-          } else {
-            $('body').addClass('sidebar-mini');
-            sidebar_mini_active = true;
-            blackDashboard.showSidebarMessage('Sidebar mini activated...');
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-        });
-
-        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (white_color == true) {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').removeClass('white-content');
-            }, 900);
-            white_color = false;
-          } else {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').addClass('white-content');
-            }, 900);
-
-            white_color = true;
-          }
-
-
-        });
-
-        $('.light-badge').click(function() {
-          $('body').addClass('white-content');
-        });
-
-        $('.dark-badge').click(function() {
-          $('body').removeClass('white-content');
-        });
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      <?php if ($this->session->userdata('Departemen') == 'Departemen Kesejahteraan Mahasiswa' || $this->session->userdata('akses') == 'ADMIN'): ?>
-        $('#myTable').DataTable( {
-            dom: 'Bfrtip',
-            lengthChange: false,
-            buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
-        } );
-     
-        table.buttons().container()
-            .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-        <?php else: ?>
-          $('#myTable').DataTable();
-      <?php endif ?>
-    } );
-  </script>
 </body>
-
 </html>

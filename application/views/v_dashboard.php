@@ -12,14 +12,31 @@
             <div class="block block-four"></div>
             <a href="javascript:void(0)">
               <img class="avatar" src="<?php echo base_url(); ?>/assets/img/default-avatar.png" alt="...">
-              <h5 class="title"><?php echo $this->session->userdata('nama'); ?></h5>
+              <h5 class="title"><?php echo htmlentities($this->session->userdata('nama')); ?></h5>
             </a>
             <p class="description">
-              <?php echo $this->session->userdata('npm'); ?> <br> <?php echo $this->session->userdata('kelas'); ?>
+              <?php echo htmlentities($this->session->userdata('npm')); ?> <br> <?php echo htmlentities($this->session->userdata('kelas')); ?>
             </p>
-            <a href="#" class="btn btn-sm btn-warning">Ganti Password</a>
+            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalPass">Ganti password</button>
+            <a href="<?php echo base_url(); ?>qr/<?php echo $this->session->userdata('npm'); ?>.pdf" target="_blank" class="btn btn-sm btn-info">Download QR Code</a>
           </div>
-          <p></p>
+          <br>
+          <?php if ($this->session->flashdata('success') != null): ?>
+              <div class="alert alert-success">
+                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="tim-icons icon-simple-remove"></i>
+                  </button>
+                  <span><b> Success - </b> <?php echo $this->session->flashdata('success'); ?></span>
+                </div>
+            <?php endif ?>
+            <?php if ($this->session->flashdata('fail') != null): ?>
+              <div class="alert alert-danger">
+                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="tim-icons icon-simple-remove"></i>
+                  </button>
+                  <span><b> Failed - </b> <?php echo $this->session->flashdata('fail'); ?></span>
+                </div>
+            <?php endif ?>
           <div class="card-description">
            <div class="col-md-12">
             <div class="card  card-plain">
@@ -35,7 +52,7 @@
                           JABATAN
                         </td>
                         <td>
-                          <?php echo $this->session->userdata('jabatan'); ?>
+                          <?php echo htmlentities($this->session->userdata('jabatan')); ?>
                         </td>
                       </tr>
                       <tr>
@@ -43,7 +60,7 @@
                           DEPARTEMEN
                         </td>
                         <td>
-                          <?php echo $this->session->userdata('departemen'); ?>
+                          <?php echo htmlentities($this->session->userdata('departemen')); ?>
                         </td>
                       </tr>
                       <tr>
@@ -51,7 +68,7 @@
                           PUASA
                         </td>
                         <td>
-                          <?php echo $this->session->userdata('puasa'); ?>
+                          <?php echo htmlentities($this->session->userdata('puasa')); ?>
                         </td>
                       </tr>
                       <tr>
@@ -59,7 +76,7 @@
                           IZIN BERMALAM
                         </td>
                         <td>
-                          <?php echo $this->session->userdata('ib'); ?>
+                          <?php echo htmlentities($this->session->userdata('ib')); ?>
                         </td>
                       </tr>
                     </tbody>
@@ -79,6 +96,41 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalPass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ganti Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="<?php echo base_url(); ?>index.php/senat/gantiPass">
+          <div class="form-group">
+            <label class="col-form-label">Password Lama :</label>
+            <input type="password" name="pass-lama" class="form-control" id="pass-lama" style="color: black" required>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Password Baru :</label>
+            <input type="password" name="pass-baru" class="form-control" id="pass-baru" style="color: black" required>
+          </div>
+          <div class="form-group" >
+            <label class="col-form-label">Konfirmasi Password Baru :</label>
+            <input type="password" class="form-control" id="pass-baru-konf" style="color: black" required onkeyup="checkPasswordMatch()">
+            <div><p id="div-konf"></p></div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" id="btn-pass" class="btn btn-primary">Submit</button>
+      </div>
+      </form>
     </div>
   </div>
 </div>
