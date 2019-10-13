@@ -11,7 +11,7 @@ class M_depdik extends CI_Model {
 
     public function getBelumAbsen()
 	{
-		$this->db->select("nama,NPM");
+		$this->db->select("nama,NPM,wajar,kelas");
         $this->db->order_by('NPM', 'ASC');
         $this->db->where('wajar',"TIDAK");
         $this->db->where("akses!=","ADMIN");
@@ -20,7 +20,7 @@ class M_depdik extends CI_Model {
 
     public function getSudahAbsen()
 	{
-		$this->db->select("nama,NPM,wajar");
+		$this->db->select("nama,NPM,wajar,kelas");
         $this->db->order_by('NPM', 'ASC');
         $this->db->where('wajar!=',"TIDAK");
         $this->db->where("akses!=","ADMIN");
@@ -43,7 +43,6 @@ class M_depdik extends CI_Model {
 		return $query->result();	
 	}
 
-
 	public function scan($keterangan,$npmcek)
 	{
 		$object = array('wajar' => $keterangan);
@@ -57,7 +56,7 @@ class M_depdik extends CI_Model {
 
 	public function resetAbsensi()
 	{
-		$object = array('wajar' => 'TIDAK', );
+		$object = array('wajar' => 'TIDAK');
 		$this->db->where('wajar','HADIR')->where('npm !=','123456')->update('data', $object);
 
 		if ($this->db->affected_rows() > 0) {

@@ -297,6 +297,47 @@ class Senat extends CI_Controller {
 		}
 	}
 
+	public function wajar()
+	{
+		if ($this->session->userdata('login') == true) {
+			$data['title'] = 'Data Wajib belajar';
+			$data['main_view'] = 'v_wajar';
+			$data['active'] = 'Sudah';
+			$data['absen'] = $this->m_depdik->getSudahAbsen();
+			$this->load->view('template', $data);
+		} else {
+			redirect('auth');
+		}
+	}
+
+	public function belum_wajar()
+	{
+		if ($this->session->userdata('login') == true) {
+			$data['title'] = 'Data Wajib belajar';
+			$data['main_view'] = 'v_wajar';
+			$data['active'] = 'Belum';
+			$data['absen'] = $this->m_depdik->getBelumAbsen();
+			$this->load->view('template', $data);
+		} else {
+			redirect('auth');
+		}
+	}
+
+	public function reset_wajar()
+	{
+		if ($this->session->userdata('login') == true) {
+			if($this->m_depdik->resetAbsensi() == true){
+				$this->session->set_flashdata('notif', 'Reset');
+				redirect('senat/wajar');
+			} else {
+				$this->session->set_flashdata('notif', 'Reset Gagal');
+				redirect('senat/wajar');
+			}
+		} else {
+			redirect('auth');
+		}
+	}
+
 }
 
 /* End of file Senat.php */

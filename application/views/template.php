@@ -85,6 +85,12 @@
               <p>Puasa</p>
             </a>
           </li>
+          <li>
+            <a href="<?php echo base_url(); ?>index.php/senat/wajar">
+              <i class="tim-icons icon-pin"></i>
+              <p>Wajib Belajar</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
