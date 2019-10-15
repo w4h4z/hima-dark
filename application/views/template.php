@@ -107,7 +107,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">Sistem Informasi HIMA</a>
+            <a class="navbar-brand" href="javascript:void(0)">SI HIMA</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -206,6 +206,7 @@
   <script src="<?php echo base_url(); ?>/assets/js/core/popper.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/core/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <?php if ($main_view == 'v_ib' || $main_view == 'v_puasa' || $main_view == 'v_jdih' || $main_view == 'v_wajar' || $main_view == 'v_belum_wajar'): ?>
      <!-- Datatable -->
      <script src="<?php echo base_url(); ?>/assets/datatable/datatables.min.js"></script>
