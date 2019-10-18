@@ -26,7 +26,7 @@
             <div style="float: left;">
               <p>Upload Data JDIH :</p>
               <form method="post" enctype="multipart/form-data" action="<?php echo base_url(); ?>index.php/senat/upload_jdih">
-                <input type="text" name="judul_jdih" class="form-control" placeholder="Judul JDIH" required>
+                <input type="text" name="judul_jdih" class="form-control" placeholder="Judul JDIH" required autocomplete="off">
                 <input type="file" name="file_jdih" class="form-control" required>
                 <button type="submit" class="btn btn-info btn-sm">Upload</button>
               </form>

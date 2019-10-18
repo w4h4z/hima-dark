@@ -12,7 +12,8 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('v_beranda');
+		redirect('auth/login');
+		//$this->load->view('v_beranda');
 	}
 
 	public function login()

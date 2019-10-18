@@ -37,7 +37,7 @@
           </ul>
         <div class="card-body">
           <div class="table-responsive ps">
-            <table class="table tablesorter" id="myTable">
+            <table class="table tablesorter" id="tablewajar">
               <thead class=" text-primary">
                 <tr>
                   <th>

@@ -92,6 +92,15 @@
               <p>Wajib Belajar</p>
             </a>
           </li>
+          <?php if ($this->session->userdata('departemen') == 'Departemen Riset dan Teknologi' || $this->session->userdata('akses') == 'ADMIN'): ?>
+          <li>
+            <a href="<?php echo base_url(); ?>index.php/senat/admin">
+              <i class="tim-icons icon-pin"></i>
+              <p>Admin</p>
+            </a>
+          </li>
+          <?php endif ?>
+          
         </ul>
       </div>
     </div>
@@ -107,7 +116,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)">SI HIMA</a>
+            <a class="navbar-brand" href="javascript:void(0)">Sistem Informasi HIMA</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -116,11 +125,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-              <li class="search-bar input-group">
-                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split" ></i>
-                  <span class="d-lg-none d-md-block">Search</span>
-                </button>
-              </li>
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <div class="photo">
@@ -140,18 +144,6 @@
           </div>
         </div>
       </nav>
-      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i class="tim-icons icon-simple-remove"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
       
       <?php $this->load->view($main_view); ?>
       
@@ -226,12 +218,84 @@
     <?php endif ?>
   <?php endif ?>
 
-  <script>$(document).ready(function(){$().ready(function(){$sidebar=$('.sidebar');$navbar=$('.navbar');$main_panel=$('.main-panel');$full_page=$('.full-page');$sidebar_responsive=$('body > .navbar-collapse');sidebar_mini_active=!0;white_color=!1;window_width=$(window).width();fixed_plugin_open=$('.sidebar .sidebar-wrapper .nav li.active a p').html();$('.fixed-plugin a').click(function(event){if($(this).hasClass('switch-trigger')){if(event.stopPropagation){event.stopPropagation()}else if(window.event){window.event.cancelBubble=!0}}});$('.fixed-plugin .background-color span').click(function(){$(this).siblings().removeClass('active');$(this).addClass('active');var new_color=$(this).data('color');if($sidebar.length!=0){$sidebar.attr('data',new_color)}
-if($main_panel.length!=0){$main_panel.attr('data',new_color)}
-if($full_page.length!=0){$full_page.attr('filter-color',new_color)}
-if($sidebar_responsive.length!=0){$sidebar_responsive.attr('data',new_color)}});$('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch",function(){var $btn=$(this);if(sidebar_mini_active==!0){$('body').removeClass('sidebar-mini');sidebar_mini_active=!1;blackDashboard.showSidebarMessage('Sidebar mini deactivated...')}else{$('body').addClass('sidebar-mini');sidebar_mini_active=!0;blackDashboard.showSidebarMessage('Sidebar mini activated...')}
-var simulateWindowResize=setInterval(function(){window.dispatchEvent(new Event('resize'))},180);setTimeout(function(){clearInterval(simulateWindowResize)},1000)});$('.switch-change-color input').on("switchChange.bootstrapSwitch",function(){var $btn=$(this);if(white_color==!0){$('body').addClass('change-background');setTimeout(function(){$('body').removeClass('change-background');$('body').removeClass('white-content')},900);white_color=!1}else{$('body').addClass('change-background');setTimeout(function(){$('body').removeClass('change-background');$('body').addClass('white-content')},900);white_color=!0}});$('.light-badge').click(function(){$('body').addClass('white-content');$.ajax({url:'<?php echo base_url(); ?>senat/resetAsrama/',type:'POST',dataType:'JSON',data:'',success:function(r){console.log(r)}})});$('.dark-badge').click(function(){$('body').removeClass('white-content')})})});</script><script type="text/javascript">$(document).ready(function(){<?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>$('#tableib').DataTable({dom:'Bfrtip',lengthChange:!1,buttons:['copy','excel','pdf','colvis']});table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');<?php else:?>$('#tableib').DataTable();<?php endif?><?php if($this->session->userdata('departemen')=='Departemen Rohani'||$this->session->userdata('akses')=='ADMIN'):?>$('#tablepuasa').DataTable({dom:'Bfrtip',lengthChange:!1,buttons:['copy','excel','pdf','colvis']});table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');<?php else:?>$('#tablepuasa').DataTable();<?php endif?>});</script><script type="text/javascript">function checkPasswordMatch(){var password=$("#pass-baru").val();var confirmPassword=$("#pass-baru-konf").val();if(password!=confirmPassword)
-$("#div-konf").html("Passwords do not match!").css('color','red');else $("#div-konf").html("Passwords match.").css('color','green')}</script>
+<script>$(document).ready(function() {
+    $().ready(function() {
+        $sidebar=$('.sidebar');
+        $navbar=$('.navbar');
+        $main_panel=$('.main-panel');
+        $full_page=$('.full-page');
+        $sidebar_responsive=$('body > .navbar-collapse');
+        sidebar_mini_active= !0;
+        white_color= !1;
+        window_width=$(window).width();
+        fixed_plugin_open=$('.sidebar .sidebar-wrapper .nav li.active a p').html();
+        $('.fixed-plugin a').click(function(event) {
+            if($(this).hasClass('switch-trigger')) {
+                if(event.stopPropagation) {
+                    event.stopPropagation()
+                }
+                else if(window.event) {
+                    window.event.cancelBubble= !0
+                }
+            }
+        }
+        );
+        $('.fixed-plugin .background-color span').click(function() {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            var new_color=$(this).data('color');
+            if($sidebar.length !=0) {
+                $sidebar.attr('data', new_color)
+            }
+            if($main_panel.length !=0) {
+                $main_panel.attr('data', new_color)
+            }
+            if($full_page.length !=0) {
+                $full_page.attr('filter-color', new_color)
+            }
+            if($sidebar_responsive.length !=0) {
+                $sidebar_responsive.attr('data', new_color)
+            }
+        }
+        );
+        $('.light-badge').click(function() {
+            $('body').addClass('white-content')
+        }
+        );
+        $('.dark-badge').click(function() {
+            $('body').removeClass('white-content')
+        }
+        )
+    }
+    )
+}
 
+);
+</script><script type="text/javascript">$(document).ready(function() {
+    <?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>$('#tableib').DataTable( {
+        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
+    }
+    );
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    <?php else:?>$('#tableib').DataTable();
+    <?php endif?><?php if($this->session->userdata('departemen')=='Departemen Rohani'||$this->session->userdata('akses')=='ADMIN'):?>$('#tablepuasa').DataTable( {
+        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
+    }
+    );
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    <?php else:?>$('#tablepuasa').DataTable();
+    <?php endif?>
+}
+
+);
+$('#tablewajar').DataTable();
+</script><script type="text/javascript">function checkPasswordMatch() {
+    var password=$("#pass - baru ").val();
+    var confirmPassword=$("#pass - baru - konf ").val();
+    if(password !=confirmPassword) $("#div-konf").html("Passwords do not match!").css('color', 'red');
+    else $("#div-konf").html("Passwords match.").css('color', 'green')
+}
+
+</script>
 </body>
 </html>

@@ -2,36 +2,35 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_profil extends CI_Model {
-		public function getMahasiswa($npm)
-		{
-			# code...
-			$query = $this->db->select('NPM,nama,kelas,password,jabatan,departemen,puasa,ib,akses')
-					 ->where('NPM',$npm)
-					 ->get('data');
+	public function getMahasiswa($npm)
+	{
+		$query = $this->db->select('NPM,nama,kelas,password,jabatan,departemen,puasa,ib,akses')
+		->where('NPM',$npm)
+		->get('data');
 
-			if ($this->db->affected_rows() > 0) {
-				$data = $query->row();
+		if ($this->db->affected_rows() > 0) {
+			$data = $query->row();
 
-				$array = array(
-					'npm' 		=> $data->NPM,
-					'nama'		=> $data->nama,
-					'kelas'		=> $data->kelas,
-					'jabatan'	=> $data->jabatan,
-					'departemen'=> $data->departemen,
-					'puasa'		=> $data->puasa,
-					'ib'		=> $data->ib,
-					'akses'		=> $data->akses,
-					'login'		=> true
-				);
-			}
-			else {
-				$array = array(
-					'login'=> false
-				);
-			} 
-			
-			return $array;
+			$array = array(
+				'npm' 		=> $data->NPM,
+				'nama'		=> $data->nama,
+				'kelas'		=> $data->kelas,
+				'jabatan'	=> $data->jabatan,
+				'departemen'=> $data->departemen,
+				'puasa'		=> $data->puasa,
+				'ib'		=> $data->ib,
+				'akses'		=> $data->akses,
+				'login'		=> true
+			);
 		}
+		else {
+			$array = array(
+				'login'=> false
+			);
+		} 
+
+		return $array;
+	}
 
 	public function getAll()
 	{
@@ -63,6 +62,22 @@ class M_profil extends CI_Model {
 		$this->db->select('nama')->where('NPM',$npm);
 		return $this->db->get('data')->row()->nama;
 	}
+
+	public function updateTema($tema)
+	{
+		$object = array('tema' => $tema );
+		$this->db->insert('data', $object);
+
+		if ($this->db->affected_rows() > 0) 
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }
 
 /* End of file M_profil.php */

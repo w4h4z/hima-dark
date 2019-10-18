@@ -62,6 +62,31 @@ class M_user extends CI_Model {
 		return $this->db->select('password')->where('NPM', $this->session->userdata('npm'))->get('data')->row();
 	}
 
+	public function insert_mhs()
+	{
+		$object = array(
+			'NPM' => $this->input->post('npm'),
+			'nama' => $this->input->post('nama'),
+			'kelas' => $this->input->post('kelas'),
+			'departemen' => $this->input->post('departemen'),
+			'jabatan' => $this->input->post('jabatan'),
+			'password' => sha1($this->input->post('password'))
+		);
+		
+		$this->db->insert('data', $object);
+
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function insert_mhs_csv($data) {
+        $this->db->insert('tes_csv', $data);
+    }
+	
+
 /* End of file m_user.php */
 /* Location: ./application/models/m_user.php */
 }
