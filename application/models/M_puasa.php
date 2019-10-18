@@ -19,7 +19,7 @@ class M_puasa extends CI_Model {
                 SELECT (@row_number:=@row_number + 1) 
                 AS num, nama,NPM,kelas 
                 FROM data,(SELECT @row_number:=0) AS t 
-                where puasa='Ya' and NPM!='123456'
+                where puasa='Ya' and NPM!='0192837465'
                 order by kelas asc
 			");	
 		
@@ -107,7 +107,7 @@ class M_puasa extends CI_Model {
 	public function buka_puasa()
 	{
 		$this->db->set("puasa","Ya");
-		$this->db->where("npm","123456");
+		$this->db->where("npm","0192837465");
 		$this->db->update("data");
 
 		if ($this->db->affected_rows() > 0) {
@@ -120,7 +120,7 @@ class M_puasa extends CI_Model {
 	public function tutup_puasa()
 	{
 		$this->db->set("puasa","Tidak");
-		$this->db->where("npm","123456");
+		$this->db->where("npm","0192837465");
 		$this->db->update("data");
 
 		if ($this->db->affected_rows() > 0) {
@@ -133,7 +133,7 @@ class M_puasa extends CI_Model {
 	public function resetPuasa()
 	{
 		$object = array('puasa' => 'Tidak', );
-		$this->db->where('puasa','Ya')->where('npm !=','123456')->update('data', $object);
+		$this->db->where('puasa','Ya')->where('npm !=','0192837465')->update('data', $object);
 
 		if ($this->db->affected_rows() > 0) {
 			return true;
@@ -177,7 +177,7 @@ class M_puasa extends CI_Model {
 
 	public function getStatusPuasa()
 	{
-		return $this->db->select('puasa')->where('NPM','123456')->get('data')->row()->puasa;
+		return $this->db->select('puasa')->where('NPM','0192837465')->get('data')->row()->puasa;
 	}
 
 }

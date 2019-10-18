@@ -46,7 +46,7 @@
 
 </head>
 
-<body class="">
+<body class="<?php echo $tema; ?>">
   <div class="wrapper">
     <div class="sidebar">
       <!--
@@ -260,10 +260,28 @@
         );
         $('.light-badge').click(function() {
             $('body').addClass('white-content')
+            $.ajax({
+              url: '<?php echo base_url();?>index.php/senat/updateTema/white-content',
+              type: 'POST',
+              dataType: 'JSON',
+              data: '',
+              success: function(r) {
+                console.log(r.status);
+              }
+            })
         }
         );
         $('.dark-badge').click(function() {
             $('body').removeClass('white-content')
+            $.ajax({
+              url: '<?php echo base_url();?>index.php/senat/updateTema/black-content',
+              type: 'POST',
+              dataType: 'JSON',
+              data: '',
+              success: function(r) {
+                console.log(r);
+              }
+            })
         }
         )
     }
@@ -271,7 +289,10 @@
 }
 
 );
-</script><script type="text/javascript">$(document).ready(function() {
+</script>
+
+<?php if ($main_view == 'v_ib' ||$main_view == 'v_puasa' ||$main_view == 'v_wajar' || $main_view == 'v_jdih'): ?>
+<script type="text/javascript">$(document).ready(function() {
     <?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>$('#tableib').DataTable( {
         dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
     }
@@ -289,7 +310,11 @@
 
 );
 $('#tablewajar').DataTable();
-</script><script type="text/javascript">function checkPasswordMatch() {
+$('#tablejdih').DataTable();
+</script>
+<?php endif ?>
+
+<script type="text/javascript">function checkPasswordMatch() {
     var password=$("#pass - baru ").val();
     var confirmPassword=$("#pass - baru - konf ").val();
     if(password !=confirmPassword) $("#div-konf").html("Passwords do not match!").css('color', 'red');

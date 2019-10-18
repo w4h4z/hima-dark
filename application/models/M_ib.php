@@ -16,7 +16,7 @@ class M_ib extends CI_Model {
                 SELECT (@row_number:=@row_number + 1) 
                 AS num, nama,NPM,kelas 
                 FROM data,(SELECT @row_number:=0) AS t 
-                where ib='Ya' and NPM !='123456'
+                where ib='Ya' and NPM !='0192837465'
                 order by kelas asc
 			");	
 		
@@ -50,7 +50,7 @@ class M_ib extends CI_Model {
 	public function buka_ib()
 	{
 		$this->db->set("ib","Ya");
-		$this->db->where("NPM","123456");
+		$this->db->where("NPM","0192837465");
 		$this->db->update("data");
 
 		if ($this->db->affected_rows() > 0) {
@@ -63,7 +63,7 @@ class M_ib extends CI_Model {
 	public function tutup_ib()
 	{
 		$this->db->set("ib","Tidak");
-		$this->db->where("NPM","123456");
+		$this->db->where("NPM","0192837465");
 		$this->db->update("data");
 
 		if ($this->db->affected_rows() > 0) {
@@ -111,7 +111,7 @@ class M_ib extends CI_Model {
 	public function resetIb()
 	{
 		$object = array('ib' => 'Tidak');
-		$this->db->where('npm !=','123456');
+		$this->db->where('npm !=','0192837465');
 		$this->db->update('data', $object);
 
 		if ($this->db->affected_rows() > 0) {
@@ -123,7 +123,7 @@ class M_ib extends CI_Model {
 
 	public function getStatusIb()
 	{
-		return $this->db->select('ib')->where('NPM','123456')->get('data')->row()->ib;
+		return $this->db->select('ib')->where('NPM','0192837465')->get('data')->row()->ib;
 	}
 
 }

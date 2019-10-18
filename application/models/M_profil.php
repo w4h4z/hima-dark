@@ -63,21 +63,6 @@ class M_profil extends CI_Model {
 		return $this->db->get('data')->row()->nama;
 	}
 
-	public function updateTema($tema)
-	{
-		$object = array('tema' => $tema );
-		$this->db->insert('data', $object);
-
-		if ($this->db->affected_rows() > 0) 
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 }
 
 /* End of file M_profil.php */

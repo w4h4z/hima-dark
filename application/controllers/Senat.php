@@ -24,6 +24,7 @@ class Senat extends CI_Controller {
 		if ($this->session->userdata('login') == true) {
 			$data['title'] = 'Dashboard';
 			$data['main_view'] = 'v_dashboard';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$this->load->view('template', $data);
 		} else {
 			redirect('auth');
@@ -50,6 +51,7 @@ class Senat extends CI_Controller {
 			$data['status_ib'] = $this->m_ib->getStatusIb(); 
 			$data['title'] = 'Data Mahasiswa Izin Bermalam';
 			$data['main_view'] = 'v_ib';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$data['ib'] = $this->m_ib->get_ib();
 			$this->load->view('template', $data);
 		} else {
@@ -155,6 +157,7 @@ class Senat extends CI_Controller {
 			$data['status_puasa'] = $this->m_puasa->getStatusPuasa(); 
 			$data['title'] = 'Data Mahasiswa Puasa';
 			$data['main_view'] = 'v_puasa';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$data['puasa'] = $this->m_puasa->get_puasa();
 			$this->load->view('template', $data);
 		} else {
@@ -246,6 +249,7 @@ class Senat extends CI_Controller {
 		if ($this->session->userdata('login') == true) {
 			$data['title'] = 'Data JDIH';
 			$data['main_view'] = 'v_jdih';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$data['jdih'] = $this->m_jdih->getJdih();
 			$this->load->view('template', $data);
 		} else {
@@ -307,6 +311,7 @@ class Senat extends CI_Controller {
 			$data['title'] = 'Data Wajib belajar';
 			$data['main_view'] = 'v_wajar';
 			$data['active'] = 'Sudah';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$data['absen'] = $this->m_depdik->getSudahAbsen();
 			$this->load->view('template', $data);
 		} else {
@@ -320,6 +325,7 @@ class Senat extends CI_Controller {
 			$data['title'] = 'Data Wajib belajar';
 			$data['main_view'] = 'v_wajar';
 			$data['active'] = 'Belum';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$data['absen'] = $this->m_depdik->getBelumAbsen();
 			$this->load->view('template', $data);
 		} else {
@@ -375,6 +381,7 @@ class Senat extends CI_Controller {
 		if ($this->session->userdata('departemen') == 'Departemen Riset dan Teknologi' || $this->session->userdata('akses') == 'ADMIN'){
 			$data['title'] = 'Admin';
 			$data['main_view'] = 'v_admin';
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
 			$this->load->view('template', $data);
 		}
 	}
@@ -405,12 +412,14 @@ class Senat extends CI_Controller {
 	}
 
 
-	public function updateTema()
+	public function updateTema($tema)
 	{
-		if ($this->m_profil->updateTema()) {
-			
+		$r = array('status' => true);
+		if ($this->m_user->updateTema($tema)) {
+			json_encode($r);
 		} else {
-			
+			$r['status'] = false;
+			json_encode($r);
 		}
 	}
 

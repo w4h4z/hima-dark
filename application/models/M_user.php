@@ -81,11 +81,18 @@ class M_user extends CI_Model {
 			return false;
 		}
 	}
-
-	public function insert_mhs_csv($data) {
-        $this->db->insert('tes_csv', $data);
-    }
 	
+	public function updateTema($tema)
+	{
+		$object = array('tema' => $tema);
+		$this->db->where('NPM', $this->session->userdata('npm'))->update('data', $object);
+		
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 /* End of file m_user.php */
 /* Location: ./application/models/m_user.php */
