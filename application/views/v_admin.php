@@ -104,6 +104,8 @@
             <label class="col-form-label"></label>
             <input type="file" name="file-csv" class="form-control" id="file-csv" required style="opacity: 1; height: fit-content; color: black">
           </div>
+          <a href="<?php echo base_url(); ?>doc/data.csv" target="_blank" style="margin-top: 20px" class="btn btn-info btn-sm">Download Template CSV</a>
+          <p style="margin-top: 10px">*use ; for delimeter</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

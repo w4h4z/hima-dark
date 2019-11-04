@@ -46,7 +46,7 @@
 
 </head>
 
-<body class="<?php echo $tema; ?>">
+<body class="<?php echo $tema; ?>" onload="startTime()">
   <div class="wrapper">
     <div class="sidebar">
       <!--
@@ -55,10 +55,10 @@
       <div class="sidebar-wrapper">
         <div class="logo">
           <a href="javascript:void(0)" class="simple-text logo-mini">
-            <i class="tim-icons icon-satisfied"></i>
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
-            <?php echo htmlentities($this->session->userdata('nama')); ?>
+            <!-- <?php echo htmlentities($this->session->userdata('nama')); ?> -->
+            <p id="clock"></p>
           </a>
         </div>
         <ul class="nav">
@@ -90,6 +90,12 @@
             <a href="<?php echo base_url(); ?>index.php/senat/wajar">
               <i class="tim-icons icon-pin"></i>
               <p>Wajib Belajar</p>
+            </a>
+          </li>
+          <li>
+            <a href="<?php echo base_url(); ?>index.php/senat/leaderboard">
+              <i class="tim-icons icon-pin"></i>
+              <p>Leaderboard</p>
             </a>
           </li>
           <?php if ($this->session->userdata('departemen') == 'Departemen Riset dan Teknologi' || $this->session->userdata('akses') == 'ADMIN'): ?>
@@ -291,36 +297,59 @@
 );
 </script>
 
-<?php if ($main_view == 'v_ib' ||$main_view == 'v_puasa' ||$main_view == 'v_wajar' || $main_view == 'v_jdih'): ?>
-<script type="text/javascript">$(document).ready(function() {
-    <?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>$('#tableib').DataTable( {
-        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
-    }
-    );
-    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
-    <?php else:?>$('#tableib').DataTable();
-    <?php endif?><?php if($this->session->userdata('departemen')=='Departemen Rohani'||$this->session->userdata('akses')=='ADMIN'):?>$('#tablepuasa').DataTable( {
-        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
-    }
-    );
-    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
-    <?php else:?>$('#tablepuasa').DataTable();
-    <?php endif?>
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('clock').innerHTML =
+  h + ":" + m + ":" + s + " WIB";
+  var t = setTimeout(startTime, 500);
 }
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
 
-);
-$('#tablewajar').DataTable();
-$('#tablejdih').DataTable();
+<?php 
+if ($main_view == 'v_ib' ||$main_view == 'v_puasa' ||$main_view == 'v_wajar' || $main_view == 'v_jdih'): ?>
+<script type="text/javascript">
+$(document).ready(function() {
+    <?php if($this->session->userdata('departemen')=='Departemen Kesejahteraan Mahasiswa'||$this->session->userdata('akses')=='ADMIN'):?>
+      $('#tableib').DataTable( {
+        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
+      });
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    <?php else:?>
+      $('#tableib').DataTable();
+    <?php endif?>
+    });
+    <?php if($this->session->userdata('departemen')=='Departemen Rohani'||$this->session->userdata('akses')=='ADMIN'):?>
+      $('#tablepuasa').DataTable( {
+        dom: 'Bfrtip', lengthChange: !1, buttons:['copy', 'excel', 'pdf', 'colvis']
+      });
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+    <?php else:?>
+      $('#tablepuasa').DataTable();
+    <?php endif?>
 </script>
 <?php endif ?>
+<script type="text/javascript">
+  $('#tablewajar').DataTable();
+  $('#tablejdih').DataTable();
+</script>
 
-<script type="text/javascript">function checkPasswordMatch() {
-    var password=$("#pass - baru ").val();
-    var confirmPassword=$("#pass - baru - konf ").val();
+<script type="text/javascript">
+  function checkPasswordMatch() {
+    var password=$("#pass-baru").val();
+    var confirmPassword=$("#pass-baru-konf").val();
     if(password !=confirmPassword) $("#div-konf").html("Passwords do not match!").css('color', 'red');
     else $("#div-konf").html("Passwords match.").css('color', 'green')
-}
-
+  }
 </script>
 </body>
 </html>

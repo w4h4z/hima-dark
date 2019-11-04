@@ -18,7 +18,7 @@
               <?php echo htmlentities($this->session->userdata('npm')); ?> <br> <?php echo htmlentities($this->session->userdata('kelas')); ?>
             </p>
             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalPass">Ganti password</button>
-            <a href="<?php echo base_url(); ?>qr/<?php echo $this->session->userdata('npm'); ?>.pdf" target="_blank" class="btn btn-sm btn-info">Download QR Code</a>
+            <a href="<?php echo base_url(); ?>index.php/senat/download" target="_blank" class="btn btn-sm btn-info">Download QR Code</a>
           </div>
           <br>
           <?php if ($this->session->flashdata('success') != null): ?>
@@ -118,11 +118,11 @@
           </div>
           <div class="form-group">
             <label class="col-form-label">Password Baru :</label>
-            <input type="password" name="pass-baru" class="form-control" id="pass-baru" style="color: black" required>
+            <input type="password" name="pass-baru" minlength="8" class="form-control" id="pass-baru" style="color: black" required onkeyup="checkPasswordMatch()">
           </div>
           <div class="form-group" >
             <label class="col-form-label">Konfirmasi Password Baru :</label>
-            <input type="password" class="form-control" id="pass-baru-konf" style="color: black" required onkeyup="checkPasswordMatch()">
+            <input type="password" class="form-control" minlength="8" name="pass-baru-konf" id="pass-baru-konf" style="color: black" required onkeyup="checkPasswordMatch()">
             <div><p id="div-konf"></p></div>
           </div>
       </div>

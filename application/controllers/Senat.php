@@ -61,6 +61,14 @@ class Senat extends CI_Controller {
 
 	public function reset_ib()
 	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Kesejahteraan Mahasiswa') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+		
 		if($this->m_ib->resetIb() == true){
 			$this->session->set_flashdata('notif', 'Reset');
 			redirect('senat/ib');
@@ -105,6 +113,14 @@ class Senat extends CI_Controller {
 
 	public function buka_tutup_ib()
 	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Kesejahteraan Mahasiswa') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
 		$status = $this->m_ib->getStatusIb();
 
 		if ($status == 'Tidak') {
@@ -167,6 +183,14 @@ class Senat extends CI_Controller {
 
 	public function reset_puasa()
 	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Rohani') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
 		if($this->m_puasa->resetpuasa() == true){
 			$this->session->set_flashdata('notif', 'Reset');
 			redirect('senat/puasa');
@@ -211,6 +235,14 @@ class Senat extends CI_Controller {
 
 	public function buka_tutup_puasa()
 	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Rohani') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
 		$status = $this->m_puasa->getStatuspuasa();
 
 		if ($status == 'Tidak') {
@@ -335,6 +367,14 @@ class Senat extends CI_Controller {
 
 	public function reset_wajar()
 	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Akademik Mahasiswa') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
 		if ($this->session->userdata('login') == true) {
 			if($this->m_depdik->resetAbsensi() == true){
 				$this->session->set_flashdata('notif', 'Reset');
@@ -354,6 +394,21 @@ class Senat extends CI_Controller {
 			$this->session->set_flashdata('fail', 'Password lama tidak sama');
 			redirect('senat');
 		}
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('pass-baru', 'Password Baru', 'trim|required|min_length[8]');
+		$this->form_validation->set_rules('pass-baru-konf', 'Password Baru Konfirmasi', 'trim|required|min_length[8]');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->session->set_flashdata('fail', validation_errors());
+			redirect('senat');
+        }
+
+       /*if ($this->input->post('pass-baru') == '' || $this->input->post('pass-baru-konf') == ''){
+            $this->session->set_flashdata('fail', 'Password baru tidak boleh kosong');
+			redirect('senat');
+        }*/
 
 		if ($this->m_user->gantiPass() == true) {
 			$this->session->set_flashdata('success', 'Ganti Password Berhasil');
@@ -411,7 +466,6 @@ class Senat extends CI_Controller {
 		}
 	}
 
-
 	public function updateTema($tema)
 	{
 		$r = array('status' => true);
@@ -422,7 +476,6 @@ class Senat extends CI_Controller {
 			json_encode($r);
 		}
 	}
-
 
 	public function insert_mhs_csv()
 	{
@@ -453,19 +506,27 @@ class Senat extends CI_Controller {
 	            for($i = 0, $j = count($csv_line); $i < $j; $i++)
 	            {
 	                $insert_csv = array();
-	                $insert_csv['nama'] = $csv_line[0];
-	                $insert_csv['kelas'] = $csv_line[1];
-	                $insert_csv['ket'] = $csv_line[2];
+	                $insert_csv['NPM'] = $csv_line[0];
+	                $insert_csv['nama'] = $csv_line[1];
+	                $insert_csv['kelas'] = $csv_line[2];
+	                $insert_csv['akses'] = $csv_line[3];
+	                $insert_csv['departemen'] = $csv_line[4];
+	                $insert_csv['jabatan'] = $csv_line[5];
+	                $insert_csv['password'] = $csv_line[6];
 
 	            }
 	            $i++;
 	            $data = array(
-	                'nama' => $insert_csv['nama'] ,
+	            	'NPM' => $insert_csv['NPM'],
+	                'nama' => $insert_csv['nama'],
 	                'kelas' => $insert_csv['kelas'],
-	                'ket' => $insert_csv['ket']
+	                'akses' => $insert_csv['akses'],
+	                'departemen' => $insert_csv['departemen'],
+	                'jabatan' => $insert_csv['jabatan'],
+	                'password' => sha1($insert_csv['password'])
 	            );
 
-	            $data['crane_features'] = $this->db->insert('tes_csv', $data);
+	            $data['crane_features'] = $this->db->insert('data', $data);
 	        	
 	        }
 	        fclose($fp) or die("can't close file");
@@ -473,6 +534,24 @@ class Senat extends CI_Controller {
 	        $this->session->set_flashdata('success', 'Insert data berhasil');
 	        redirect('senat/admin');
         }
+	}
+
+	public function download()
+	{
+		force_download('kodeqr/'.$this->session->userdata('npm').'.pdf',NULL);
+	}
+
+	public function leaderboard()
+	{
+		if ($this->session->userdata('login') == true) {
+			$data['title'] = 'Leaderboard';
+			$data['main_view'] = 'v_leaderboard';
+			$data['leader'] = $this->db->get('leaderboard')->result();
+			$data['tema'] = $this->db->where('NPM', $this->session->userdata('npm'))->get('data')->row()->tema;
+			$this->load->view('template', $data);
+		} else {
+			redirect('auth');
+		}
 	}
 
 	/* API KARYA BOSSSSSSSSS */
@@ -536,6 +615,183 @@ class Senat extends CI_Controller {
 			echo json_encode($data2);			
 		}
 
+	}
+
+	public function gantiIb()
+	{
+		if ($this->input->post('code')=='Betul') 
+		{
+			if ($this->m_ib->daftarIbAPI()) 
+			{
+				$data=array(
+					"status"=>"sukses",
+					"ib"=>$this->input->post('ib')
+				);
+			}
+			else
+			{
+				$data=array(
+					"status"=>"gagal"
+				);
+			}
+		echo json_encode($data);	
+		}
+	}
+
+
+	public function gantiPuasa()
+	{
+			if ($this->m_puasa->daftarPuasaAPI()) 
+			{
+				$data=array(
+					"status"=>"sukses"
+					//"puasa"=>$this->input->post('puasa')
+				);
+			}
+			else
+			{
+				$data=array(
+					"status"=>"gagal"
+				);
+			}
+		echo json_encode($data);	
+	}
+
+	public function getAsrama($asrama,$kamar='')
+	{
+		$this->load->model('m_asrama');
+		if ($kamar=='') 
+		{
+			$hasil=$this->m_asrama->get_asrama($asrama);
+		}
+		else
+		{
+			$hasil=$this->m_asrama->get_kamar($asrama,$kamar);
+		}
+		echo json_encode($hasil);
+	}
+
+	public function cekKamar($asrama)
+	{
+		$kamar=$this->input->post('kamar');
+		$oleh=$this->input->post('oleh');
+		if ($asrama=='astri') {
+			if($this->m_asrama->cekAstri($kamar,$oleh))
+			{
+				$array = array('status' => 'Sukses Cek Astri' );
+			}
+			else
+			{
+				$array = array('status' => 'Gagal Cek Astri' );	
+			}
+		}
+		else if ($asrama=='astra') 
+		{
+			if($this->m_asrama->cekAstra($kamar,$oleh))
+			{
+				$array = array('status' => 'Sukses Cek Astra' );
+			}
+			else
+			{
+				$array = array('status' => 'Gagal Cek Astra' );	
+			}
+		}
+		echo json_encode($array);
+	}
+
+	public function resetPuasa()
+	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Rohani') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
+		$r = array('status' => true);
+		if($this->m_puasa->resetPuasa() == true){
+			echo json_encode($r);
+		} else {
+			$r['status'] = false;
+			echo json_encode($r);
+		}
+	}
+
+	public function bukaPuasa()
+	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Rohani') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
+		$r = array('status' => true);
+		if($this->m_puasa->buka_puasa() == true){
+			echo json_encode($r);
+		} else {
+			$r['status'] = false;
+			echo json_encode($r);
+		}
+	}
+
+	public function tutupPuasa()
+	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Rohani') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
+		$r = array('status' => true);
+		if($this->m_puasa->tutup_puasa() == true){
+			echo json_encode($r);
+		} else {
+			$r['status'] = false;
+			echo json_encode($r);
+		}
+	}
+
+	public function bukaIb()
+	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Kesejahteraan Mahasiswa') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
+		$r = array('status' => true);
+		if($this->m_ib->buka_ib() == true){
+			echo json_encode($r);
+		} else {
+			$r['status'] = false;
+			echo json_encode($r);
+		}
+	}
+
+	public function tutupIb()
+	{
+		$dep = $this->session->userdata('departemen');
+
+		if ($dep != 'Departemen Kesejahteraan Mahasiswa') {
+			$r = array('response' => 'in your dream :p');
+			echo json_encode($r);
+			return;
+		}
+
+		$r = array('status' => true);
+		if($this->m_ib->tutup_ib() == true){
+			echo json_encode($r);
+		} else {
+			$r['status'] = false;
+			echo json_encode($r);
+		}
 	}
 
 	/* END OF API KARYA */

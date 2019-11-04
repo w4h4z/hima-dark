@@ -16,9 +16,26 @@ class Auth extends CI_Controller {
 		//$this->load->view('v_beranda');
 	}
 
+	/*public function logFile($data)
+	{
+		$data=$data;
+	    if (!write_file('./log_file.txt', $data)){
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}*/
+
+	/*public function get_logFile()
+	{
+		echo file_get_contents("log_file.txt");
+	}*/
+
 	public function login()
 	{
 		if ($this->session->userdata('login') == true) {
+			//$log = date("Y-m-d H:i:s").' '.$this->session->userdata('nama').' '.'Login';
+			//$this->logFile($log);
 			redirect('senat');
 		} else {
 			$this->load->view('v_login');
@@ -28,6 +45,7 @@ class Auth extends CI_Controller {
 	public function logout()
 	{
 		$this->session->sess_destroy();
+		log_message('error', $this->session->userdata('npm').' '.$this->session->userdata('nama').' telah logout');
 		redirect('auth');
 	}
 
@@ -39,12 +57,13 @@ class Auth extends CI_Controller {
 		}
 
 		if ($this->m_auth->login() == true) {
+			log_message('error', $this->session->userdata('npm').' '.$this->session->userdata('nama').' telah login');
 			if ($this->input->post('dari')!="Android") 
 			{
 				redirect('auth/login');
 			}
 		} else {
-			$this->session->set_flashdata('notif', 'Login gagal');
+			$this->session->set_flashdata('info', 'Login gagal');
 			redirect('auth/login');
 		}
 	}
